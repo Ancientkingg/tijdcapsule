@@ -8,12 +8,19 @@
 </script>
 
 <Router {url}>
-  <nav>
-    <Link to="/">Home</Link>
-    <Link to="/capsule/1">Capsule 1</Link>
-  </nav>
   <div>
     <Route path="/capsule/:id" component={Capsule} />
     <Route path="/"><Home /></Route>
   </div>
 </Router>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+</style>

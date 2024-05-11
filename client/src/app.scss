@@ -1,19 +1,63 @@
+:root {
+    --input-background-color: #161b22;
+    --input-foreground-color: #f7f7f7;
+    --primary-background-color: #0d1117;
+    --primary-foreground-color: #a3a3a3;
+    --secondary-background-color: #151b36;
+    --secondary-foreground-color: #a3a3a3;
+
+    --accent-color: #1f6feb;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: rgb(163,163,163);
-    font-size: 1.05rem; // Dit is beetje L
-    font-family: monospace;
+    color: var(--primary-foreground-color);
+    font-family: "Inter", sans-serif;
 }
 
-body {
-    background-color: #020617;
+
+html,body {
+    font-size: 18px;
+    background-color: var(--secondary-background-color);
 }
 
-button {
+.button {
     cursor: pointer;
     border: none;
     outline: none;
-    background-color: transparent;
+    background-color: var(--primary-background-color);
+    padding: 0.3rem 1rem;
+    font-size: 1.1rem;
+    border-radius: 0.3rem;
+    transition: 0.3s ease all;
+
+    &:hover {
+        background-color: #242f3f;
+    }
 }
+
+input {
+    color: var(--input-foreground-color);
+    background: var(--input-background-color);
+    min-width: 0px;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    margin: 0px;
+    border: 1px solid rgba(103, 113, 137, 0.3);
+    border-radius: 3px;
+    width: var(--date-input-width, 150px);
+    outline: none;
+    transition: all 80ms cubic-bezier(0.4, 0, 0.2, 1);
+
+
+    &:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0px 0px 0px 2px rgba(2, 105, 247, 0.4);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }

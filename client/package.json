@@ -24,7 +24,10 @@
     "@cartamd/plugin-attachment": "^4.0.0",
     "@cartamd/plugin-code": "^4.0.4",
     "@cartamd/plugin-emoji": "^4.0.1",
+    "@cartamd/plugin-math": "^4.0.1",
     "@cartamd/plugin-slash": "^4.0.1",
-    "carta-md": "^4.0.2"
+    "carta-md": "^4.0.2",
+    "date-picker-svelte": "^2.12.0",
+    "katex": "^0.16.10"
   }
 }
