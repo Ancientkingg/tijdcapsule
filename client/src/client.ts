@@ -9,7 +9,7 @@ interface CapsuleResponse {
   content: string;
   author: string;
   deadline: string;
-  createdAt: string;
+  created_at: string;
 }
 
 export interface Capsule {
@@ -18,7 +18,7 @@ export interface Capsule {
   content: string;
   author: string;
   deadline: Date;
-  createdAt: Date;
+  created_at: Date;
 }
 
 export interface CreateCapsule {
@@ -37,7 +37,7 @@ const parseResponse = (response: CapsuleResponse): Capsule => {
     content: response.content,
     author: response.author,
     deadline: new Date(response.deadline),
-    createdAt: new Date(response.createdAt),
+    created_at: new Date(response.created_at),
   };
 };
 

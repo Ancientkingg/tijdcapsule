@@ -4,7 +4,6 @@
 
   import { fetchCapsule, type Capsule } from "../client";
   import Waiting from "../lib/waiting/Waiting.svelte";
-  import { useHistory } from "svelte-routing";
 
   export let id: string;
   let key: string = window.location.hash.substring(1);
@@ -51,7 +50,7 @@
       onReady={refreshCapsule}
       mode="random"
       deadline={capsule.deadline}
-      createdAt={capsule.createdAt}
+      createdAt={capsule.created_at}
     />
   {:else}
     <Markdown value={capsule.content} />
