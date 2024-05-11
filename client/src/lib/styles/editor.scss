@@ -1,9 +1,6 @@
 .carta-theme__default {
   // Core styles
-  $background: #0d1117;
-  $background-light: #161b22;
   $border: #2b3138;
-  $accent: #1f6feb;
 
   // Shiki theme
   --border-color: var(--border-color-dark);
@@ -19,14 +16,19 @@
   }
   // End Shiki theme
 
+  .carta-font-code {
+    font-family: monospace;
+    font-size: 1.1rem;
+  }
+
   &.carta-editor {
-    background-color: $background;
+    background-color: var(--primary-background-color);
     border: 1px solid $border;
     border-radius: 0.5rem;
-	width: 100%;
+    width: 100%;
 
     &:focus-within {
-      outline: 2px solid $accent;
+      outline: 2px solid var(--accent-color);
     }
 
     .carta-wrapper {
@@ -36,11 +38,6 @@
 
       .carta-container {
         min-height: 120px;
-      }
-
-      .task-list-item {
-        margin-left: 1rem;
-        list-style-type: disc;
       }
     }
 
@@ -53,7 +50,7 @@
     .carta-toolbar {
       height: 2.5rem;
 
-      background-color: $background-light;
+      background-color: var(--input-background-color);
 
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
@@ -91,11 +88,11 @@
       }
 
       .carta-active {
-        background-color: $background;
+        background-color: var(--primary-background-color);
         color: white;
 
         border-right: 1px solid $border;
-        border-bottom: 1px solid $background;
+        border-bottom: 1px solid var(--primary-background-color);
 
         &:not(:first-child) {
           border-left: 1px solid $border;
@@ -112,7 +109,7 @@
       border: 1px solid $border;
       border-radius: 6px;
       min-width: 180px;
-      background: $background;
+      background: var(--primary-background-color);
 
       .carta-icon-full {
         padding-left: 6px;
@@ -144,14 +141,14 @@
     overflow-y: scroll;
     border-radius: 4px;
     font-family: inherit;
-    background-color: $background;
+    background-color: var(--primary-background-color);
     padding: 6px;
     scroll-padding: 6px;
     gap: 6px;
   }
 
   &.carta-emoji button {
-    background: $background-light;
+    background: var(--input-background-color);
 
     aspect-ratio: 1;
     border-radius: 4px;
@@ -176,7 +173,7 @@
     overflow-y: scroll;
     border-radius: 4px;
     font-family: inherit;
-    background-color: $background;
+    background-color: var(--primary-background-color);
     padding: 6px;
     scroll-padding: 6px;
   }
@@ -201,7 +198,7 @@
 
   &.carta-slash button.carta-active,
   &.carta-slash button:hover {
-    background: $background-light;
+    background: var(--input-background-color);
     cursor: pointer;
   }
 
@@ -213,5 +210,12 @@
   &.carta-slash .carta-snippet-description {
     font-size: 0.8rem;
     text-overflow: ellipsis;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 }

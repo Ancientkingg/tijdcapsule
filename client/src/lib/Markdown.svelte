@@ -1,18 +1,16 @@
 <script lang="ts">
-  import { Carta, MarkdownEditor } from "carta-md";
+  import { Carta, Markdown } from "carta-md";
 
   import { emoji } from "@cartamd/plugin-emoji";
   import { slash } from "@cartamd/plugin-slash";
   import { code } from "@cartamd/plugin-code";
   import { math } from "@cartamd/plugin-math";
 
-  import "./styles/editor.scss";
   import "./styles/markdown.scss";
 
   import "katex/dist/katex.css";
 
   export let value = "";
-  export let mode: "auto" | "split" | "tabs" | undefined = "tabs";
 
   const carta = new Carta({
     sanitizer: false,
@@ -20,4 +18,19 @@
   });
 </script>
 
-<MarkdownEditor bind:value {mode} {carta} />
+<div class="markdown-wrapper">
+  <Markdown bind:value {carta} />
+</div>
+
+<style lang="scss">
+  .markdown-wrapper {
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-background-color);
+    border-radius: 8px;
+    border: 1px solid rgb(43, 49, 56);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+</style>
