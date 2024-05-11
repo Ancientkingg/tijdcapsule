@@ -38,7 +38,7 @@ pub async fn create(payload: CreateCapsule, ip_addr: String) -> Result<PublishCa
 
 pub enum CapsuleError {
     Sqlx(sqlx::Error),
-    Deadline(DateTime<Utc>)
+    Deadline(DateTime<Utc>, DateTime<Utc>)
 }
 
 pub async fn get(capsule_id: &CapsuleId, sleutel: &str) -> Result<Capsule, CapsuleError> {
@@ -49,7 +49,7 @@ pub async fn get(capsule_id: &CapsuleId, sleutel: &str) -> Result<Capsule, Capsu
 
     if let Some(deadline) = server_capsule.deadline {
         if deadline > chrono::Utc::now().to_utc() {
-            return Err(CapsuleError::Deadline(deadline));
+            return Err(CapsuleError::Deadline(deadline, server_capsule.created_at));
         }
     }
 
