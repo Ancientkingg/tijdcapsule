@@ -18,7 +18,7 @@ pub async fn create(payload: CreateCapsule, ip_addr: String) -> Result<PublishCa
         content: Some(encrypted_content),
         author_id: String::from("NOT_AN_ID___SOMETHING_WENT_WRONG"),
         deadline: payload.deadline,
-        created_at: chrono::Utc::now().naive_utc(),
+        created_at: chrono::Utc::now().to_utc(),
     };
 
     let author = crate::persist::user::User {
@@ -48,7 +48,7 @@ pub async fn get(capsule_id: &CapsuleId, sleutel: &str) -> Result<Capsule, Capsu
     };
 
     if let Some(deadline) = server_capsule.deadline {
-        if deadline > chrono::Utc::now().naive_utc() {
+        if deadline > chrono::Utc::now().to_utc() {
             return Err(CapsuleError::Deadline(deadline));
         }
     }

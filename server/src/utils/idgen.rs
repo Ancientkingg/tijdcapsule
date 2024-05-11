@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDate, Utc};
 use rand::{thread_rng, RngCore};
 
-const LOCAL_EPOCH: DateTime<Utc> = match Date::from_ymd_opt(2024, 5, 11) {
+const LOCAL_EPOCH: DateTime<Utc> = match NaiveDate::from_ymd_opt(2024, 5, 11) {
     Some(date) => match date.and_hms_opt(14, 42,53) {
-        Some(datetime) => datetime,
+        Some(datetime) => datetime.and_utc(),
         None => panic!("Error building epoch!"),
     },
     None => panic!("Error building epoch!"),
@@ -16,7 +16,7 @@ pub struct CapsuleId(String);
 impl CapsuleId {
     pub fn generate() -> CapsuleId {
         let entropy = (thread_rng().next_u32() as u64) << 48;
-        let ms_since_epoch = ((Utc::now().naive_utc()
+        let ms_since_epoch = ((Utc::now().to_utc()
                                 .signed_duration_since(LOCAL_EPOCH)
                                 .num_milliseconds() as u64) << 16) >> 16;
         let number_representation = entropy | ms_since_epoch;
