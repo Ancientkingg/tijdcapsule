@@ -26,7 +26,7 @@ pub fn encrypt(data: &str, key_str: &str, initial_vector: Option<&[u8]>) -> Resu
     loop {
         let result = encryptor.encrypt(&mut read_buffer, &mut write_buffer, true)?;
 
-        final_result.extend(write_buffer.take_read_buffer().take_remaining().iter().map(|&i| i));
+        final_result.extend(write_buffer.take_read_buffer().take_remaining().iter().copied());
 
         match result {
             BufferResult::BufferUnderflow => break,
@@ -61,7 +61,7 @@ pub fn decrypt(encrypted_str: &str, key_str: &str, initial_vector: Option<&[u8]>
 
     loop {
         let result = decryptor.decrypt(&mut read_buffer, &mut write_buffer, true)?;
-        final_result.extend(write_buffer.take_read_buffer().take_remaining().iter().map(|&i| i));
+        final_result.extend(write_buffer.take_read_buffer().take_remaining().iter().copied());
         match result {
             BufferResult::BufferUnderflow => break,
             BufferResult::BufferOverflow => { }

@@ -68,12 +68,12 @@ pub mod key {
     }
 
     pub fn to_key(key_fragment: &str) -> String {
-        let key = {
+        
+
+        {
             let mut key = key_fragment.repeat(KEY_LENGTH / FRAGMENT_LENGTH + 1);
             key.truncate(KEY_LENGTH);
             key
-        };
-
-        key
+        }
     }
 }

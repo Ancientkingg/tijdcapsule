@@ -8,7 +8,7 @@ use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 pub static POOL: OnceCell<Pool<Postgres>> = OnceCell::new();
 
 pub async fn init() {
-    if let Some(_) = POOL.get() {
+    if POOL.get().is_some() {
         panic!("Database connection pool already initialized!");
     }
 
