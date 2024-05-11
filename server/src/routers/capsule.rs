@@ -1,5 +1,5 @@
 
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use crate::persist::capsule::Capsule;
@@ -10,7 +10,7 @@ pub struct CreateCapsule {
     pub name: String,
     pub content: String,
     pub author: String,
-    pub deadline: Option<NaiveDateTime>,
+    pub deadline: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

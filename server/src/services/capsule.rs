@@ -1,4 +1,4 @@
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Utc};
 
 use crate::routers::capsule::PublishCapsule;
 use crate::utils::idgen::key::to_key;
@@ -38,7 +38,7 @@ pub async fn create(payload: CreateCapsule, ip_addr: String) -> Result<PublishCa
 
 pub enum CapsuleError {
     Sqlx(sqlx::Error),
-    Deadline(NaiveDateTime)
+    Deadline(DateTime<Utc>)
 }
 
 pub async fn get(capsule_id: &CapsuleId, sleutel: &str) -> Result<Capsule, CapsuleError> {

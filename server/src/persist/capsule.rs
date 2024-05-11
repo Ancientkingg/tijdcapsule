@@ -1,6 +1,6 @@
 
 use crate::utils::idgen::CapsuleId;
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Utc};
 
 use serde::{Deserialize, Serialize};
 
@@ -12,8 +12,8 @@ pub struct Capsule {
     pub name: Option<String>,
     pub content: Option<String>,
     pub author_id: String,
-    pub deadline: Option<NaiveDateTime>,
-    pub created_at: NaiveDateTime,
+    pub deadline: Option<DateTime<Utc>>,
+    pub created_at: DateTime<Utc>,
 }
 
 pub async fn get_by_id(id: &CapsuleId) -> Result<Capsule, sqlx::Error> {

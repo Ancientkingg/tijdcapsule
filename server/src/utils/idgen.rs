@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
-use chrono::{NaiveDate, NaiveDateTime, Utc};
+use chrono::{DateTime, Utc};
 use rand::{thread_rng, RngCore};
 
-const LOCAL_EPOCH: NaiveDateTime = match NaiveDate::from_ymd_opt(2024, 5, 11) {
+const LOCAL_EPOCH: DateTime<Utc> = match Date::from_ymd_opt(2024, 5, 11) {
     Some(date) => match date.and_hms_opt(14, 42,53) {
         Some(datetime) => datetime,
         None => panic!("Error building epoch!"),
