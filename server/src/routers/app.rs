@@ -13,6 +13,7 @@ use super::capsule;
 
 fn new() -> Router {
     let cors = CorsLayer::new()
+        .allow_headers(Any)
         .allow_methods([Method::GET, Method::POST])
         .allow_origin(Any);
 
