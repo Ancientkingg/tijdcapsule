@@ -85,8 +85,6 @@ mod tests {
 
         let encrypted = encrypt(content, &key, iv).unwrap();
 
-        
-
         assert_eq!(content, decrypt(dbg!(&encrypted), &to_key(&key_fragment), iv).unwrap());
     }
 }
