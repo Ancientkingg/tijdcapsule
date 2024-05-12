@@ -1,0 +1,38 @@
+name: Shuttle Deploy
+
+on:
+    push:
+      branches: [ "prod" ]
+    pull_request:
+      branches: [ "prod" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: shuttle
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Build front-end
+        run: |
+          npm ci
+          npm run deploy
+        working-directory: client
+
+      - uses: shuttle-hq/deploy-action@main
+        with:
+          deploy-key: ${{ secrets.SHUTTLE_API_KEY }}
+          working-directory: "backend"
+          name: "my-project"
+          allow-dirty: "true"
+          no-test: "true"
+          cargo-shuttle-version: "0.28.1"
+          secrets: |
+            DB_PASSWORD = '${{ secrets.LOCAL_DB_PASSWORD }}'
+            COOKIE_KEY = '${{ secrets.COOKIE_KEY }}'
