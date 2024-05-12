@@ -3,3 +3,6 @@ target/*
 
 .env
 Secrets.toml
+
+public
+public/*
