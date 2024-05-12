@@ -5,7 +5,7 @@ on:
     branches: [ "prod" ]
 
 env:
-  VITE_API_URL: https://tijdcapsule.shuttleapp.rs
+  VITE_API_URL: https://tijdcapsule.shuttleapp.rs/api
 
 jobs:
   deploy:
