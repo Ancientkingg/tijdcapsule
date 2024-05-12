@@ -3,8 +3,6 @@ name: Shuttle Deploy
 on:
     push:
       branches: [ "prod" ]
-    pull_request:
-      branches: [ "prod" ]
 
 jobs:
   deploy:
