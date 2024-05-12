@@ -28,7 +28,7 @@ export interface CreateCapsule {
   deadline: string;
 }
 
-const BASE_PATH = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const BASE_PATH = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 const parseResponse = (response: CapsuleResponse): Capsule => {
   return {

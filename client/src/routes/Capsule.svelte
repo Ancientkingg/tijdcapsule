@@ -6,7 +6,15 @@
   import Waiting from "../lib/waiting/Waiting.svelte";
 
   export let id: string;
-  let key: string = window.location.hash.substring(1);
+  let key: string = (() => {
+    const key = new URLSearchParams(window.location.search).get("sleutel");
+
+    if (!key) {
+      throw new Error("No key provided");
+    }
+
+    return key;
+  })();
 
   let capsule: Capsule;
   let status: "LOADING" | "ERROR" | "WAITING" | "SUCCESS" = "LOADING";

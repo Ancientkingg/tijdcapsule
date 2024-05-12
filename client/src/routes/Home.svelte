@@ -18,7 +18,7 @@
       author,
       deadline: deadline.toISOString(),
     }).then((capsule) => {
-      navigate(`/capsule/${capsule.capsule.id}#${capsule.key}`)
+      navigate(`/capsule/${capsule.capsule.id}?sleutel=${capsule.key}`)
       console.log("Capsule created", capsule);
     });
   };
