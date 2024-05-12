@@ -3,3 +3,4 @@
 - Change preview text to be preview text instead of real text
 - Change font to be more pleasant
 - Add header with logo
+- Add markdown sanitizer
