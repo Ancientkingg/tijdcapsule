@@ -1,8 +1,11 @@
 name: Shuttle Deploy
 
 on:
-    push:
-      branches: [ "prod" ]
+  push:
+    branches: [ "prod" ]
+
+env:
+  VITE_API_URL: https://tijdcapsule.shuttleapp.rs/
 
 jobs:
   deploy:
