@@ -26,11 +26,9 @@ jobs:
       - uses: shuttle-hq/deploy-action@main
         with:
           deploy-key: ${{ secrets.SHUTTLE_API_KEY }}
-          working-directory: "backend"
-          name: "my-project"
+          working-directory: "server"
           allow-dirty: "true"
           no-test: "true"
-          cargo-shuttle-version: "0.28.1"
           secrets: |
             DB_PASSWORD = '${{ secrets.LOCAL_DB_PASSWORD }}'
             COOKIE_KEY = '${{ secrets.COOKIE_KEY }}'
