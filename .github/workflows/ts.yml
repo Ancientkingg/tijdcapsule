@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main", "prod" ]
 
+env:
+  VITE_API_URL: https://api.example.com    
+
 jobs:
   build:
 
