@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, NaiveDate, Utc};
-use rand::{thread_rng, RngCore};
+use rand::{distributions::{Alphanumeric, DistString}, thread_rng, RngCore};
 
 const LOCAL_EPOCH: DateTime<Utc> = match NaiveDate::from_ymd_opt(2024, 5, 11) {
     Some(date) => match date.and_hms_opt(14, 42,53) {
@@ -76,4 +76,9 @@ pub mod key {
             key
         }
     }
+}
+
+pub fn generate_client_id() -> String {
+    let client_id = Alphanumeric.sample_string(&mut thread_rng(), 32);
+    client_id
 }

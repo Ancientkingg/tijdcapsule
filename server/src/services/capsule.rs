@@ -6,7 +6,7 @@ use crate::{persist::capsule::Capsule, routers::capsule::CreateCapsule, utils::i
 use crate::persist;
 use crate::utils::cipher;
 
-pub async fn create(payload: CreateCapsule, ip_addr: String) -> Result<PublishCapsule, sqlx::Error> {
+pub async fn create(payload: CreateCapsule, id: String) -> Result<PublishCapsule, sqlx::Error> {
 
     let (key_fragment, key) = crate::utils::idgen::key::generate();
 
@@ -22,7 +22,7 @@ pub async fn create(payload: CreateCapsule, ip_addr: String) -> Result<PublishCa
     };
 
     let author = crate::persist::user::User {
-        id: ip_addr,
+        id: id,
         name: payload.author,
     };
 

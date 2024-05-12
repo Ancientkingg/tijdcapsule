@@ -26,21 +26,33 @@ pub struct Params {
 
 pub mod handler {
 
-    use axum::{extract::{Query, Path}, http::StatusCode, response::{IntoResponse, Response}, Json};
-    use axum_client_ip::SecureClientIp;
+    use axum::{extract::{Path, Query}, http::StatusCode, response::{IntoResponse, Response}, Json};
+    use axum_extra::extract::{cookie::Cookie, SignedCookieJar};
     use log::info;
     use serde_json::json;
     
     use crate::utils::idgen::CapsuleId;
+    use crate::utils::idgen;
     use crate::services;
 
     use super::{CreateCapsule, Params};
 
-    pub async fn get(client_secure_ip: SecureClientIp, Query(params): Query<Params>, Path(capsule_id): Path<CapsuleId>) -> Response {
-        let ip_addr = format!("{}", client_secure_ip.0);
-        info!("Handling GET request to /capsule/{} from {}", capsule_id, ip_addr);
+    fn get_client_id(jar: SignedCookieJar) -> (SignedCookieJar, String) {
+        if let Some(client_id) = jar.get("client_id") {
+            (jar, client_id.value().to_string())
+        } else {
+            let client_id = idgen::generate_client_id();
+            let jar = jar.add(Cookie::new("client_id", client_id.clone()));
+            (jar, client_id)
+        }
+    }
 
-        let resp: Response = match services::capsule::get(&capsule_id, &params.sleutel).await {
+    pub async fn get(jar: SignedCookieJar, Query(params): Query<Params>, Path(capsule_id): Path<CapsuleId>) -> (SignedCookieJar, Response) {
+        let (jar, client_id) = get_client_id(jar);
+
+        info!("Handling GET request to /capsule/{} from {}", capsule_id, client_id);
+
+        let (jar, resp) = match services::capsule::get(&capsule_id, &params.sleutel).await {
             Ok(capsule) => {
                 let author = services::user::get_by_id(&capsule.author_id).await.unwrap();
 
@@ -52,32 +64,33 @@ pub mod handler {
                     "deadline": capsule.deadline,
                     "created_at": capsule.created_at,
                 });
-                Json(capsule).into_response()
+                (jar, Json(capsule).into_response())
             },
 
             Err(services::capsule::CapsuleError::Deadline(deadline, created_at)) => {
-                (StatusCode::FORBIDDEN, Json(json!({"deadline": deadline, "created_at": created_at}))).into_response()
+                (jar, (StatusCode::FORBIDDEN, Json(json!({"deadline": deadline, "created_at": created_at}))).into_response())
             },
 
-            Err(services::capsule::CapsuleError::Sqlx(sqlx::Error::RowNotFound)) => (StatusCode::NOT_FOUND, format!("Capsule {} not found", capsule_id)).into_response(),
+            Err(services::capsule::CapsuleError::Sqlx(sqlx::Error::RowNotFound)) => (jar, (StatusCode::NOT_FOUND, format!("Capsule {} not found", capsule_id)).into_response()),
             
-            Err(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error").into_response(),
+            Err(_) => (jar, (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error").into_response()),
         };
         
-        resp
+        (jar, resp)
     }
 
     
-    pub async fn post(client_secure_ip: SecureClientIp, Json(payload): Json<CreateCapsule>) -> Response {
-        let ip_addr = format!("{}", client_secure_ip.0);
-        info!("Handling POST request to /capsule from {}", ip_addr);
+    pub async fn post(jar: SignedCookieJar, Json(payload): Json<CreateCapsule>) -> (SignedCookieJar, Response) {
+        let (jar, client_id) = get_client_id(jar);
+
+        info!("Handling POST request to /capsule from {}", client_id);
         
-        let server_capsule = match services::capsule::create(payload, ip_addr).await {
+        let server_capsule = match services::capsule::create(payload, client_id).await {
             Ok(capsule) => capsule,
-            Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error").into_response(),
+            Err(_) => return (jar, (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error").into_response()),
         };
         
-        Json(server_capsule).into_response()
+        (jar, Json(server_capsule).into_response())
     }
 }
 
