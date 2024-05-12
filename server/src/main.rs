@@ -7,7 +7,7 @@ mod services;
 #[shuttle_runtime::main]
 pub async fn axum(
     #[shuttle_shared_db::Postgres(
-        local_uri = "postgres://postgres:{secrets.PASSWORD}@localhost:5433/tijdcapsule"
+        local_uri = "postgres://postgres:{secrets.DB_PASSWORD}@localhost:5433/tijdcapsule"
     )] pool: sqlx::PgPool,
     #[shuttle_runtime::Secrets] secrets: shuttle_runtime::SecretStore
 ) -> shuttle_axum::ShuttleAxum {
