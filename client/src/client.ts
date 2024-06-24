@@ -73,7 +73,7 @@ export const fetchCapsule = async (capsuleId: string, key: string): Promise<Caps
 export const createCapsule = async (
   capsule: CreateCapsule
 ): Promise<CreatedCapsuleResponse> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     fetch(`${BASE_PATH}/capsule`, {
       method: "POST",
       headers: {
