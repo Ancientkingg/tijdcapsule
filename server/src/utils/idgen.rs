@@ -37,12 +37,6 @@ impl From<&str> for CapsuleId {
     }
 }
 
-impl From<std::option::Option<std::string::String>> for CapsuleId {
-    fn from(s: std::option::Option<std::string::String>) -> Self {
-        CapsuleId(s.unwrap())
-    }
-}
-
 impl std::fmt::Display for CapsuleId {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{}", self.0)

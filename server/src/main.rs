@@ -14,6 +14,7 @@ pub async fn axum(
     // Load environment variables
     dotenvy::dotenv().ok();
 
+    //? This is not needed anymore since shuttle provides the logger
     // Initialize logger
     // utils::log::init();
 
