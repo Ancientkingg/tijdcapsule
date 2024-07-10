@@ -7,7 +7,6 @@ Information We Collect
 
 We collect the following information from you when you use the Service:
 
-Paste Content: The text data you paste (information you upload)
 IP Address: The IP address of your device when you access the Service
 Metadata: Information about your paste, such as author name, creation date and expiration date (if set)
 How We Use Your Information
