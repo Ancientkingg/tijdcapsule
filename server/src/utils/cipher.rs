@@ -4,12 +4,11 @@ use base64::{engine::general_purpose, Engine as _};
 use thiserror::Error;
 
 
-#[allow(dead_code)]
 #[derive(Error, Debug)]
 pub enum CipherError {
     InvalidLength,
     Utf8Error(#[from] std::str::Utf8Error),
-    SymmetricCipherError(symmetriccipher::SymmetricCipherError),
+    SymmetricCipherError,
     Base64Error(#[from] base64::DecodeError),
 }
 
@@ -20,8 +19,8 @@ impl std::fmt::Display for CipherError {
 }
 
 impl From<symmetriccipher::SymmetricCipherError> for CipherError {
-    fn from(err: symmetriccipher::SymmetricCipherError) -> Self {
-        CipherError::SymmetricCipherError(err)
+    fn from(_err: symmetriccipher::SymmetricCipherError) -> Self {
+        CipherError::SymmetricCipherError
     }
 }
 
