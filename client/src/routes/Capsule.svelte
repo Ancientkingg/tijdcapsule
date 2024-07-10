@@ -74,23 +74,6 @@
 
     refreshCapsule();
 
-    status = 'WAITING';
-
-    var date1 = new Date();
-    date1.setHours(date1.getHours() - 1);
-
-    var date2 = new Date();
-    date2.setHours(date2.getHours() + 2);
-
-    capsule = {
-        id: '1',
-        name: 'Test Capsule',
-        content: 'This is a test capsule.',
-        author: 'Test Author',
-        deadline: date2,
-        created_at: date1,
-    }
-
     const statusClass = (() => {
         switch (status as CapsuleStatus) {
             case 'LOADING':
@@ -119,10 +102,10 @@
         <h1 class="flex justify-center items-center m-auto">{errorMessage}</h1>
     {:else if status === 'WAITING'}
         <div
-            class="flex flex-col gap-2 justify-center items-center text-center m-auto h-full w-full">
+            class="flex flex-col gap-2 justify-center items-center text-center m-auto">
             <Waiting
                 onReady={refreshCapsule}
-                mode="hourglass"
+                mode="random"
                 deadline={capsule.deadline}
                 createdAt={capsule.created_at} />
         </div>
