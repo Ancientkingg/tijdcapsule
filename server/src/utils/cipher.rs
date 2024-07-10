@@ -1,11 +1,32 @@
 use crypto::{aes, blockmodes, buffer::{self, BufferResult, ReadBuffer, WriteBuffer}, symmetriccipher};
 use base64::{engine::general_purpose, Engine as _};
 
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum CipherError {
+    InvalidLength,
+    Utf8Error(#[from] std::str::Utf8Error),
+    SymmetricCipherError(symmetriccipher::SymmetricCipherError),
+    Base64Error(#[from] base64::DecodeError),
+}
+
+impl std::fmt::Display for CipherError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
+    }
+}
+
+impl From<symmetriccipher::SymmetricCipherError> for CipherError {
+    fn from(err: symmetriccipher::SymmetricCipherError) -> Self {
+        CipherError::SymmetricCipherError(err)
+    }
+}
 
 
-pub fn encrypt(data: &str, key_str: &str, initial_vector: Option<&[u8]>) -> Result<String, symmetriccipher::SymmetricCipherError> {
+pub fn encrypt(data: &str, key_str: &str, initial_vector: Option<&[u8]>) -> Result<String, CipherError> {
     if key_str.len() != 32 {
-        return Err(symmetriccipher::SymmetricCipherError::InvalidLength);
+        return Err(CipherError::InvalidLength);
     }
 
 
@@ -38,14 +59,14 @@ pub fn encrypt(data: &str, key_str: &str, initial_vector: Option<&[u8]>) -> Resu
 }
 
 
-pub fn decrypt(encrypted_str: &str, key_str: &str, initial_vector: Option<&[u8]>) -> Result<String, symmetriccipher::SymmetricCipherError> {
+pub fn decrypt(encrypted_str: &str, key_str: &str, initial_vector: Option<&[u8]>) -> Result<String, CipherError> {
     if key_str.len() != 32 {
-        return Err(symmetriccipher::SymmetricCipherError::InvalidLength);
+        return Err(CipherError::InvalidLength);
     }
 
     
     let iv = initial_vector.unwrap_or(b"0123456789012345");
-    let encrypted_data = general_purpose::STANDARD.decode(encrypted_str.as_bytes()).unwrap();
+    let encrypted_data = general_purpose::STANDARD.decode(encrypted_str.as_bytes())?;
     let key = key_str.as_bytes();
 
     let mut decryptor = aes::cbc_decryptor(
@@ -68,7 +89,7 @@ pub fn decrypt(encrypted_str: &str, key_str: &str, initial_vector: Option<&[u8]>
         }
     }
 
-    Ok(std::str::from_utf8(&final_result).unwrap().to_string())
+    Ok(std::str::from_utf8(&final_result)?.to_string())
 }
 
 

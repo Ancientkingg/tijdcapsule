@@ -34,6 +34,7 @@ pub mod handler {
     use crate::utils::idgen::CapsuleId;
     use crate::utils::idgen;
     use crate::services;
+    use crate::services::capsule;
 
     use super::{CreateCapsule, Params};
 
@@ -54,7 +55,10 @@ pub mod handler {
 
         let (jar, resp) = match services::capsule::get(&capsule_id, &params.sleutel).await {
             Ok(capsule) => {
-                let author = services::user::get_by_id(&capsule.author_id).await.unwrap();
+                let author = match services::user::get_by_id(&capsule.author_id).await {
+                    Ok(author) => author,
+                    Err(_) => return (jar, (StatusCode::INTERNAL_SERVER_ERROR, "Unable to fetch author").into_response()),
+                };
 
                 let capsule = json!({
                     "id": capsule.id,
@@ -67,11 +71,15 @@ pub mod handler {
                 (jar, Json(capsule).into_response())
             },
 
-            Err(services::capsule::CapsuleError::Deadline(deadline, created_at)) => {
+            Err(capsule::CapsuleError::Deadline(deadline, created_at)) => {
                 (jar, (StatusCode::FORBIDDEN, Json(json!({"deadline": deadline, "created_at": created_at}))).into_response())
             },
 
-            Err(services::capsule::CapsuleError::Sqlx(sqlx::Error::RowNotFound)) => (jar, (StatusCode::NOT_FOUND, format!("Capsule {} not found", capsule_id)).into_response()),
+            Err(capsule::CapsuleError::Sqlx(sqlx::Error::RowNotFound)) => (jar, (StatusCode::NOT_FOUND, format!("Capsule {} not found", capsule_id)).into_response()),
+
+            Err(capsule::CapsuleError::Payload(err)) => (jar, (StatusCode::BAD_REQUEST, err).into_response()),
+
+            Err(capsule::CapsuleError::Cypher(_)) => (jar, (StatusCode::UNAUTHORIZED, "An invalid key was provided").into_response()),
             
             Err(_) => (jar, (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error").into_response()),
         };

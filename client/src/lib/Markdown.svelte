@@ -1,21 +1,13 @@
 <script lang="ts">
-    import { Carta, Markdown } from 'carta-md';
-
-    import { emoji } from '@cartamd/plugin-emoji';
-    import { slash } from '@cartamd/plugin-slash';
-    import { code } from '@cartamd/plugin-code';
-    import { math } from '@cartamd/plugin-math';
+    import { Markdown } from 'carta-md';
 
     import './styles/markdown.scss';
 
     import 'katex/dist/katex.css';
 
-    export let value = '';
+    import { carta } from './carta';
 
-    const carta = new Carta({
-        sanitizer: false,
-        extensions: [emoji(), slash(), code(), math()],
-    });
+    export let value = '';
 </script>
 
 <div class="markdown-wrapper">

@@ -1,4 +1,3 @@
-
 pub mod capsule;
 pub mod user;
 
@@ -15,7 +14,14 @@ pub async fn init() {
 
     let pool = PgPoolOptions::new()
         .max_connections(5)
-        .connect(&std::env::var("DATABASE_URL").unwrap()).await.unwrap();
+        .connect(&std::env::var("DATABASE_URL").unwrap())
+        .await
+        .unwrap();
+
+    match sqlx::migrate!("./migrations").run(&pool).await {
+        Ok(_) => (),
+        Err(e) => log::error!("Failed to run migrations: {:?}", e),
+    }
 
     POOL.set(pool).unwrap();
 }

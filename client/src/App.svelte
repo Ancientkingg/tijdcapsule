@@ -1,16 +1,17 @@
-<!-- App.svelte -->
 <script>
-    import { Router, Link, Route } from 'svelte-routing';
+    import './app.css';
+    import { Router, Route } from 'svelte-routing';
     import Home from './routes/Home.svelte';
     import Capsule from './routes/Capsule.svelte';
-
     export const url = '';
 </script>
 
+<!-- App.svelte -->
+
 <Router {url}>
     <div>
-        <Route path="/capsule/:id" component={Capsule} />
-        <Route path="/"><Home /></Route>
+        <Route path="/capsule/:id" component={Capsule}></Route>
+        <Route path="/"><Home></Home></Route>
     </div>
 </Router>
 
