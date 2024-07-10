@@ -1,5 +1,0 @@
-- Auto initialize database if schema is not implemented
-- Add a way to make new capsule when viewing existing one
-- Change preview text to be preview text instead of real text
-- Change font to be more pleasant
-- Add header with logo
