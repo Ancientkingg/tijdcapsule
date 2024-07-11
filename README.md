@@ -26,6 +26,7 @@ The project is deployed using Shuttle and can be found at [tijdcapsule.shuttleap
 ## Tech stack
 - [Rust](https://www.rust-lang.org/)
 - [Shuttle](https://www.shuttle.rs/)
+- [Axum](https://github.com/tokio-rs/axum/)
 - [Svelte](https://svelte.dev/)
 - [Flowbite Svelte](https://flowbite-svelte.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
