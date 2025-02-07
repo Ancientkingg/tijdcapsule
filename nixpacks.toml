@@ -6,10 +6,7 @@ nixOverlays = [
 ]
 
 [phases.install]
-cmds = ["...","./install.sh"]
+cmds = ["..."]
 
 [phases.build]
-cmds = ["...","./build.sh"]
-
-[start]
-cmd = "./start.sh"
+cmds = ["..."]
