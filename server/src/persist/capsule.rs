@@ -18,7 +18,7 @@ pub struct Capsule {
 
 pub async fn get_by_id(id: &CapsuleId) -> Result<Capsule, sqlx::Error> {
     sqlx::query_as!(
-        Capsule, 
+        Capsule,
         "
         SELECT id, name, content, author_id, deadline, created_at
             FROM capsules

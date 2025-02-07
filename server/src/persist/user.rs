@@ -18,7 +18,7 @@ pub async fn create(user: &User) -> Result<User, sqlx::Error> {
         "
         INSERT INTO users (id, name)
             VALUES ($1, $2) ON CONFLICT DO NOTHING
-            RETURNING id, name 
+            RETURNING id, name
         ", user.id, user.name
     ).fetch_one(POOL.get().unwrap()).await {
         Ok(user) => Ok(user),
