@@ -39,7 +39,7 @@ We may update this Privacy Policy from time to time without prior notice. We wil
 
 Contact Us
 
-If you have any questions about this Privacy Policy, please contact us at [your email address].
+If you have any questions about this Privacy Policy, please contact us at privacy@samuelbruin.com
 
 Disclaimer
 
