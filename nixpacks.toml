@@ -1,0 +1,10 @@
+providers = ['rust', 'node','...']
+
+[phases.install]
+cmds = ["...","./install.sh"]
+
+[phases.build]
+cmds = ["...","./build.sh"]
+
+[start]
+cmd = "./start.sh"
