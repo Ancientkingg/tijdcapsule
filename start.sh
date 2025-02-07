@@ -1,2 +1,2 @@
 cd server
-cargo run --bin server
+cargo run --bin tijdcapsule-server
