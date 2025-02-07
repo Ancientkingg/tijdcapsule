@@ -26,6 +26,7 @@ pub async fn init() {
     POOL.set(pool).unwrap();
 }
 
+#[allow(dead_code)]
 pub fn from(pool: Pool<Postgres>) {
     if POOL.get().is_some() {
         panic!("Database connection pool already initialized!");
