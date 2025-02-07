@@ -6,3 +6,6 @@ Secrets.toml
 
 public
 public/*
+/target
+.shuttle*
+Secrets*.toml
