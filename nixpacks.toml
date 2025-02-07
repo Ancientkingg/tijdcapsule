@@ -1,5 +1,10 @@
 providers = ['rust', 'node','...']
 
+[phases.setup]
+nixOverlays = [
+    'https://github.com/dreadsfun/rust-overlay/archive/master.tar.gz',
+]
+
 [phases.install]
 cmds = ["...","./install.sh"]
 
