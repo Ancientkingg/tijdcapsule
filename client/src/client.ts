@@ -35,7 +35,7 @@ export enum ApiError {
     INTERNAL_SERVER = 'INTERNAL_SERVER',
 }
 
-const BASE_PATH = import.meta.env.VITE_API_URL || 'https://tijdcapsule.samuelbruin.com';
+const BASE_PATH = import.meta.env.VITE_API_URL || 'https://tijdcapsule.samuelbruin.com/api';
 
 const parseResponse = (response: CapsuleResponse): Capsule => {
     return {
